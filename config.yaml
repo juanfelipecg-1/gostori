@@ -1,0 +1,7 @@
+ENVIRONMENT_NAME: local
+DB_HOST: localhost
+DB_PORT: "5432"
+DB_USERNAME: root
+DB_SCHEMA: gostori
+SMTP_HOST: "localhost"
+SMTP_PORT: "2525"
