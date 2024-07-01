@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_DB: gostori
+      POSTGRES_HOST_AUTH_METHOD: trust
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U root -d gostori"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  smtp:
+    image: rnwood/smtp4dev
+    ports:
+      - "3000:80"
+      - "2525:25"

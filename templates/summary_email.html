@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions Summary</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #022d32;
+            color: #FFF;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #02383e;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .header {
+            background-color: #01d180;
+            color: white;
+            padding: 14px;
+            text-align: center;
+            border-radius: 42px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+        .header img {
+            width: 150px;
+            margin-bottom: 8px;
+        }
+        .title {
+            text-align: center;
+            margin: 18px 0;
+            font-size: 24px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .transaction-summary {
+            margin-bottom: 20px;
+        }
+        .transaction-summary p {
+            margin: 10px 0;
+        }
+        .transactions {
+            margin-top: 20px;
+        }
+        .transaction {
+            background-color: #022f33;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .transaction p {
+            margin: 5px 0;
+        }
+        .footer {
+            background-color: #022d32;
+            padding: 20px;
+            text-align: center;
+            font-size: 18px;
+            color: #ffffff;
+            border-radius: 0 0 10px 10px;
+        }
+        .footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Stori_Logo_2023.svg" alt="Stori Logo">
+    </div>
+    <h1 class="title">Transactions Summary</h1>
+    <div class="content">
+        <p>Hello,</p>
+        <p>The following is a summary of its transactions for this year:</p>
+        <div class="transaction-summary">
+            <p><strong>Total Balance:</strong> {{ printf "%.3f" .TotalBalance }}</p>
+            <p><strong>Credit Average:</strong> {{ printf "%.3f" .AverageCredit }}</p>
+            <p><strong>Debit Average:</strong> {{ printf "%.3f" .AverageDebit }}</p>
+        </div>
+        <div class="transactions">
+            {{ range $month, $summary := .TransactionsByMonth }}
+            <div class="transaction">
+                <p><strong>Month:</strong> {{ $month }}</p>
+                <p>Number of transactions: {{ $summary.TransactionCount }}</p>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+    <div class="footer">
+        <h2>Stori</h2>
+    </div>
+</div>
+</body>
+</html>

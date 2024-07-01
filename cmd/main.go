@@ -1,34 +1,36 @@
 package main
 
 import (
-	"github.com/juanfcgarcia/gostori/internal/config"
-	"github.com/juanfcgarcia/gostori/internal/logging"
+	"context"
+	"github.com/juanfcgarcia/gostori/cmd/app"
+	"github.com/juanfcgarcia/gostori/cmd/flags"
+	"github.com/juanfcgarcia/gostori/cmd/services"
 	"log"
 )
 
 func main() {
-	// Load configuration
-	cfg, err := config.LoadConfig("config.yaml", "config.local.yaml")
+	filePath, email := flags.ParseFlags()
+
+	// Create context
+	ctx := context.Background()
+
+	// Initialize core resources
+	core, err := app.SetupCoreResources(ctx, "config.yaml", "config.local.yaml")
 	if err != nil {
-		log.Fatalf("failed to load configuration: %v", err)
+		log.Fatalf("failed to setup core resources: %v", err)
 	}
 
-	// Setup logger
-	logger, err := logging.SetupLogger()
+	// Initialize application services
+	appServices, err := services.SetupAppServices(core)
 	if err != nil {
-		log.Fatalf("failed to setup logger: %v", err)
+		core.Logger.Fatalf("failed to setup application services: %v", err)
 	}
 
-	logger.Infow("configuration loaded",
-		"environment", cfg.EnvironmentName,
-		"db_host", cfg.DBHost,
-		"smtp_host", cfg.SMTPHost,
-	)
-
-	if config.IsLocal() {
-		logger.Info("Running in local environment")
-	} else {
-		logger.Info("Running in cloud environment")
+	// Process file
+	err = appServices.FileProcessor.ProcessFile(ctx, filePath, email)
+	if err != nil {
+		core.Logger.Fatalf("failed to process transactions: %v", err)
 	}
 
+	core.Logger.Info("Transactions processed successfully")
 }

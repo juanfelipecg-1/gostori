@@ -2,9 +2,9 @@ ENVIRONMENT_NAME: local
 DB_TYPE: "postgresql"
 DB_HOST: localhost
 DB_PORT: "5432"
-DB_USERNAME: root
-DB_PASSWORD: ""
-DB_SCHEMA: gostori
+DB_USERNAME: "user_name"
+DB_PASSWORD: "secret"
+DB_SCHEMA: "dbname"
 SMTP_HOST: "localhost"
 SMTP_PORT: "2525"
 MAX_BATCH_SIZE: 1000

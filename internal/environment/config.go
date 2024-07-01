@@ -1,4 +1,4 @@
-package config
+package environment
 
 import (
 	"github.com/pkg/errors"
@@ -11,12 +11,15 @@ import (
 
 type Config struct {
 	EnvironmentName string `mapstructure:"ENVIRONMENT_NAME"`
+	DBType          string `mapstructure:"DB_TYPE"`
 	DBHost          string `mapstructure:"DB_HOST"`
 	DBPort          string `mapstructure:"DB_PORT"`
 	DBUsername      string `mapstructure:"DB_USERNAME"`
+	DBPassword      string `mapstructure:"DB_PASSWORD"`
 	DBSchema        string `mapstructure:"DB_SCHEMA"`
 	SMTPHost        string `mapstructure:"SMTP_HOST"`
 	SMTPPort        string `mapstructure:"SMTP_PORT"`
+	MaxBatchSize    int    `mapstructure:"MAX_BATCH_SIZE"`
 }
 
 func LoadConfig(paths ...string) (*Config, error) {
